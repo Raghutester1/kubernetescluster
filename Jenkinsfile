@@ -1,8 +1,9 @@
 pipeline {
     agent any
     environment {
-        DOCKER_CRED = credentials('auth_token')
-        registry = "raghuramdevopsengineer"
+        DOCKER_CRED = credentials('token_auth')
+        registry = "raghuramdevopsengineer/reactapp"
+        registrys = "raghuramdevopsengineer/nodeapp"
         // user = "raghuramdevopsengineer"
         // pwd = "Devops@777*"
         
@@ -13,11 +14,11 @@ pipeline {
                 script {
                     bat 'docker-compose build'
                     bat 'docker images'
-                    bat "docker tag kubernetes-cluster-react:latest ${registry}/react:${env.BUILD_NUMBER}"
-                    bat "docker tag kubernetes-cluster-node:latest ${registry}/node:${env.BUILD_NUMBER}"
+                    bat "docker tag multicontainerapplication-react:latest ${registry}:${env.BUILD_NUMBER}"
+                    bat "docker tag multicontainerapplication-node:latest ${registrys}:${env.BUILD_NUMBER}"
                     bat 'docker images'
-                    bat "docker rmi kubernetes-cluster-react:latest"
-                    bat "docker rmi kubernetes-cluster-node:latest"
+                    bat "docker rmi multicontainerapplication-react:latest"
+                    bat "docker rmi multicontainerapplication-node:latest"
                 }
             }
         }
@@ -28,8 +29,8 @@ pipeline {
                     // bat 'del C:\\Users\\raghuram\\.docker\\config.json'
                     // bat 'echo "$DOCKER_CRED_PSW" | docker login -u $DOCKER_CRED_USR --password-stdin https://index.docker.io/v1/'
                     bat 'echo $DOCKER_CRED_PSW | docker login -u $DOCKER_CRED_USR --password-stdin'
-                    bat "docker image push ${registry}/react:${env.BUILD_NUMBER}"
-                    bat "docker image push ${registry}/node:${env.BUILD_NUMBER}"
+                    bat "docker image push ${registry}:${env.BUILD_NUMBER}"
+                    bat "docker image push ${registrys}:${env.BUILD_NUMBER}"
                 }
             }
         }
