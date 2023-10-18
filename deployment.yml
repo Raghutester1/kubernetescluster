@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node
+  template:
+    metadata:
+      labels:
+        app: node
+    spec:
+      containers:
+        - name: node
+          image: azacr4aks.azurecr.io/aks-deployment-node
+          ports:
+            - containerPort: 4000
+          # env:
+          #   - name: BACKEND_HOST
+          #     value: node-service
+      imagePullSecrets:
+        - name: aksdeployment
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: node
+  ports:
+    - port: 80
+      targetPort: 4000
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: react
+  template:
+    metadata:
+      labels:
+        app: react
+    spec:
+      containers:
+        - name: react
+          image: azacr4aks.azurecr.io/aks-deployment-react
+          ports:
+            - containerPort: 3000
+          # env:
+          #   - name: BACKEND_URL
+          #     value: node-service
+      imagePullSecrets:
+        - name: aksdeployment
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: react
+  ports:
+    - protocol: TCP
+      port: 3000
+      name: http
+      targetPort: 3000
