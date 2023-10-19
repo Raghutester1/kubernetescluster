@@ -4,8 +4,6 @@ pipeline {
         DOCKER_CRED = credentials('token_auth')
         registry = "raghuramdevopsengineer/reactapp"
         registrys = "raghuramdevopsengineer/nodeapp"
-        // user = "raghuramdevopsengineer"
-        // pwd = "Devops@777*"
         
     }
     stages {
@@ -34,19 +32,6 @@ pipeline {
                 }
             }
         }
-        // stage('Deploy to AKS') {
-        //     steps {
-        //         script {
-        //             sh "az login"
-        //             sh "az aks get-credentials --name ${AKS} --resource-group ${RG}"
-        //             sh "kubectl create secret docker-registry ${secret} --docker-server=${registryUrl} --docker-username=${user} --docker-password=${pwd}  --docker-email=${id}"
-        //             sh "kubectl apply -f deployment.yml"
-        //             sh "kubectl set image deployment/node-deployment node=${registryUrl}/aks-deployment-node:${env.BUILD_NUMBER}"
-        //             sh "kubectl set image deployment/react-deployment react=${registryUrl}/aks-deployment-react:${env.BUILD_NUMBER}"
-                    
-
-        //         }
-        //     }
-        // }
+        
     }
 }
