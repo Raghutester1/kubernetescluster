@@ -26,9 +26,9 @@ pipeline {
                     // bat 'docker logout'
                     // bat 'del C:\\Users\\raghuram\\.docker\\config.json'
                     // bat 'echo "$DOCKER_CRED_PSW" | docker login -u $DOCKER_CRED_USR --password-stdin https://index.docker.io/v1/'
-                    // bat 'echo "$DOCKER_CRED_PSW"| docker login -u $DOCKER_CRED_USR --password-stdin'
+                    bat 'echo $DOCKER_CRED_PSW | docker login -u $DOCKER_CRED_USR --password-stdin'
                     // bat 'docker login -u $DOCKER_CRED_USR --password-stdin'
-                    bat 'docker login -u $DOCKER_CRED_USR -p $DOCKER_CRED_PSW'
+                    // bat 'docker login -u $DOCKER_CRED_USR -p $DOCKER_CRED_PSW'
                     bat "docker image push ${registry}:${env.BUILD_NUMBER}"
                     bat "docker image push ${registrys}:${env.BUILD_NUMBER}"
                 }
