@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        DOCKER_CRED = credentials('token_auth')
+        DOCKER_CRED = credentials('Docker_hub_token')
         registry = "raghuramdevopsengineer/reactapp"
         registrys = "raghuramdevopsengineer/nodeapp"
         
